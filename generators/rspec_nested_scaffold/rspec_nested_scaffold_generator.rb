@@ -81,7 +81,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
         "rspec_nested_scaffold:view_#{action}.#{@default_file_extension}",
         File.join('app/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}")
         )
-
+      
         m.template "rspec_nested_scaffold:#{action}_erb_spec.rb",
         File.join('spec/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}_spec.rb")
       end

@@ -1,16 +1,17 @@
-require File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../../spec_helper'
+require File.expand_path(File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../../spec_helper')
 
 describe "/<%= table_name %>/show.<%= default_file_extension %>" do
   include <%= controller_class_name %>Helper
   
   before(:each) do
-    @<%= file_name %> = mock_model(<%= class_name %>)
-    @<%= nesting_owner %> = mock_model(<%= nesting_owner_class %>)
-<% for attribute in attributes -%>
-    @<%= file_name %>.stub!(:<%= attribute.name %>).and_return(<%= attribute.default_value %>)
+    assigns[:<%= nesting_owner %>] = stub_model(<%= nesting_owner_class %>)
+    assigns[:<%= file_name %>] = @<%= file_name %> = stub_model(<%= class_name %><%= attributes.empty? ? ')' : ',' %>
+<% attributes.each_with_index do |attribute, attribute_index| -%><% unless attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) -%>
+      :<%= attribute.name %> => <%= attribute.default_value %><%= attribute_index == attributes.length - 1 ? '' : ','%>
+<% end -%><% end -%>
+<% if !attributes.empty? -%>
+    )
 <% end -%>
-    assigns[:<%= nesting_owner %>] = @<%= nesting_owner %>    
-    assigns[:<%= file_name %>] = @<%= file_name %>
   end
 
   it "should render attributes in <p>" do
