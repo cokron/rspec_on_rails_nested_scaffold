@@ -61,7 +61,7 @@ describe <%= controller_class_name %>Controller do
   describe "responding to GET new" do
   
     it "should expose a new <%= file_name %> as @<%= file_name %>" do
-      mock_<%= nesting_owner %>.<%= table_name %>.should_receive(:new).and_return(mock_<%= file_name %>)
+      mock_<%= nesting_owner %>.<%= table_name %>.should_receive(:build).and_return(mock_<%= file_name %>)
       get :new, :<%= nesting_owner %>_id => "1"
       assigns[:<%= file_name %>].should equal(mock_<%= file_name %>)
     end
@@ -83,13 +83,13 @@ describe <%= controller_class_name %>Controller do
     describe "with valid params" do
       
       it "should expose a newly created <%= file_name %> as @<%= file_name %>" do
-        mock_<%= nesting_owner %>.<%= table_name %>.should_receive(:new).with({'these' => 'params'}).and_return(mock_<%= file_name %>(:save => true))
+        mock_<%= nesting_owner %>.<%= table_name %>.should_receive(:build).with({'these' => 'params'}).and_return(mock_<%= file_name %>(:save => true))
         post :create, :<%= file_name %> => {:these => 'params'}, :<%= nesting_owner %>_id => "1"
         assigns(:<%= file_name %>).should equal(mock_<%= file_name %>)
       end
 
       it "should redirect to the created <%= file_name %>" do
-        mock_<%= nesting_owner %>.<%= table_name %>.stub!(:new).and_return(mock_<%= file_name %>(:save => true))
+        mock_<%= nesting_owner %>.<%= table_name %>.stub!(:build).and_return(mock_<%= file_name %>(:save => true))
         post :create, :<%= file_name %> => {}, :<%= nesting_owner %>_id => "1"
         response.should redirect_to(<%= nesting_owner %>_<%= file_name %>_url(mock_<%= nesting_owner %>, mock_<%= file_name %>))
       end
@@ -99,13 +99,13 @@ describe <%= controller_class_name %>Controller do
     describe "with invalid params" do
 
       it "should expose a newly created but unsaved <%= file_name %> as @<%= file_name %>" do
-        mock_<%= nesting_owner %>.<%= table_name %>.stub!(:new).with({'these' => 'params'}).and_return(mock_<%= file_name %>(:save => false))
+        mock_<%= nesting_owner %>.<%= table_name %>.stub!(:build).with({'these' => 'params'}).and_return(mock_<%= file_name %>(:save => false))
         post :create, :<%= file_name %> => {:these => 'params'}, :<%= nesting_owner %>_id => "1"
         assigns(:<%= file_name %>).should equal(mock_<%= file_name %>)
       end
 
       it "should re-render the 'new' template" do
-        mock_<%= nesting_owner %>.<%= table_name %>.stub!(:new).and_return(mock_<%= file_name %>(:save => false))
+        mock_<%= nesting_owner %>.<%= table_name %>.stub!(:build).and_return(mock_<%= file_name %>(:save => false))
         post :create, :<%= file_name %> => {}, :<%= nesting_owner %>_id => "1"
         response.should render_template('new')
       end

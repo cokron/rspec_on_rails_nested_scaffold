@@ -35,7 +35,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # GET /<%=nesting_owner.pluralize%>/:<%=nesting_owner%>_id/<%= table_name %>/new
   # GET /<%=nesting_owner.pluralize%>/:<%=nesting_owner%>_id/<%= table_name %>/new.xml
   def new
-    @<%= file_name %> = @<%= nesting_owner %>.<%= table_name %>.new
+    @<%= file_name %> = @<%= nesting_owner %>.<%= table_name %>.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,7 +51,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST /<%=nesting_owner.pluralize%>/:<%=nesting_owner%>_id/<%= table_name %>
   # POST /<%=nesting_owner.pluralize%>/:<%=nesting_owner%>_id/<%= table_name %>.xml
   def create
-    @<%= file_name %> = @<%= nesting_owner %>.<%= table_name %>.new(params[:<%= file_name %>])
+    @<%= file_name %> = @<%= nesting_owner %>.<%= table_name %>.build(params[:<%= file_name %>])
 
     respond_to do |format|
       if @<%= file_name %>.save
