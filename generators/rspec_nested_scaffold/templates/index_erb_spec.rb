@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../../spec_helper')
 
 describe "/<%= table_name %>/index.<%= default_file_extension %>" do
-  include <%= controller_class_name %>Helper
-  
+  #include <%= controller_class_name %>Helper
+
   before(:each) do
     assigns[:<%= nesting_owner %>] = stub_model(<%= nesting_owner_class %>)
     assigns[:<%= table_name %>] = [
@@ -16,6 +16,7 @@ describe "/<%= table_name %>/index.<%= default_file_extension %>" do
 <% end -%>
 <% end -%>
     ]
+    assigns[:<%= table_name %>].should_receive(:total_pages).and_return(0)
   end
 
   it "should render list of <%= table_name %>" do

@@ -18,7 +18,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
   def initialize(runtime_args, runtime_options = {})
     super
     raise "For #{$0} #{File.basename(__FILE__, '.rb')} you must specify the --owner option.  See --help" unless options[:owner]
-    
+
     @nesting_owner = options[:owner].underscore.singularize
 
     @controller_name = @name.pluralize
@@ -62,7 +62,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
 
       #Controller spec, class, and helper.
       m.template 'rspec_nested_scaffold:routing_spec.rb',
-        File.join('spec/controllers', controller_class_path, "#{controller_file_name}_routing_spec.rb")
+      File.join('spec/controllers', controller_class_path, "#{controller_file_name}_routing_spec.rb")
 
       m.template 'rspec_nested_scaffold:controller_spec.rb',
       File.join('spec/controllers', controller_class_path, "#{controller_file_name}_controller_spec.rb")
@@ -70,38 +70,40 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
       m.template "rspec_nested_scaffold:controller.rb",
       File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
 
-      m.template 'rspec_scaffold:helper_spec.rb',
-      File.join('spec/helpers', class_path, "#{controller_file_name}_helper_spec.rb")
+      #m.template 'rspec_scaffold:helper_spec.rb',
+      #File.join('spec/helpers', class_path, "#{controller_file_name}_helper_spec.rb")
 
-      m.template "#{@resource_generator}:helper.rb",
-      File.join('app/helpers', controller_class_path, "#{controller_file_name}_helper.rb")
+      # DO not generate helper BG 20081210
+      #      m.template "#{@resource_generator}:helper.rb",
+      #      File.join('app/helpers', controller_class_path, "#{controller_file_name}_helper.rb")
 
       for action in scaffold_views
         m.template(
-        "rspec_nested_scaffold:view_#{action}.#{@default_file_extension}",
-        File.join('app/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}")
-        )
-      
+                   "rspec_nested_scaffold:view_#{action}.#{@default_file_extension}",
+                   File.join('app/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}")
+                   )
+
         m.template "rspec_nested_scaffold:#{action}_erb_spec.rb",
         File.join('spec/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}_spec.rb")
       end
-      
+
       # Model class, unit test, and fixtures.
       m.template 'model:model.rb',      File.join('app/models', class_path, "#{file_name}.rb")
       m.template 'model:fixtures.yml',  File.join('spec/fixtures', class_path, "#{table_name}.yml")
       m.template 'rspec_model:model_spec.rb',       File.join('spec/models', class_path, "#{file_name}_spec.rb")
 
       # View specs
-      
+      #      m.template 'rspec_nested_scaffold:view_form.html.erb',      File.join('app/views', controller_class_path, "_form.html.erb")
+
       unless options[:skip_migration]
         m.migration_template(
-          'model:migration.rb', 'db/migrate',
-          :assigns => {
-            :migration_name => "Create#{class_name.pluralize.gsub(/::/, '')}",
-            :attributes     => attributes
-          },
-          :migration_file_name => "create_#{file_path.gsub(/\//, '_').pluralize}"
-        )
+                             'model:migration.rb', 'db/migrate',
+                             :assigns => {
+                               :migration_name => "Create#{class_name.pluralize.gsub(/::/, '')}",
+                               :attributes     => attributes
+                             },
+                             :migration_file_name => "create_#{file_path.gsub(/\//, '_').pluralize}"
+                             )
       end
 
       m.route_resources controller_file_name
@@ -120,12 +122,12 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
     opt.separator ''
     opt.separator 'Options:'
     opt.on("--skip-migration",
-    "Don't generate a migration file for this model") { |v| options[:skip_migration] = v }
+           "Don't generate a migration file for this model") { |v| options[:skip_migration] = v }
     opt.on("--owner=owner", '-o', 'Nested resource owner') { |v| options[:owner] = v }
   end
 
   def scaffold_views
-    %w[ index show new edit ]
+    %w[ index show new edit _form]
   end
 
   def model_name
@@ -142,25 +144,25 @@ module Rails
     class GeneratedAttribute
       def default_value
         @default_value ||= case type
-        when :int, :integer               then "\"1\""
-        when :float                       then "\"1.5\""
-        when :decimal                     then "\"9.99\""
-        when :datetime, :timestamp, :time then "Time.now"
-        when :date                        then "Date.today"
-        when :string                      then "\"MyString\""
-        when :text                        then "\"MyText\""
-        when :boolean                     then "false"
-        else
-          ""
-        end
+                           when :int, :integer               then "\"1\""
+                           when :float                       then "\"1.5\""
+                           when :decimal                     then "\"9.99\""
+                           when :datetime, :timestamp, :time then "Time.now"
+                           when :date                        then "Date.today"
+                           when :string                      then "\"MyString\""
+                           when :text                        then "\"MyText\""
+                           when :boolean                     then "false"
+                           else
+                             ""
+                           end
       end
 
       def input_type
         @input_type ||= case type
-        when :text                        then "textarea"
-        else
-          "input"
-        end
+                        when :text                        then "textarea"
+                        else
+                          "input"
+                        end
       end
     end
   end

@@ -1,8 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../../spec_helper')
 
 describe "/<%= table_name %>/show.<%= default_file_extension %>" do
-  include <%= controller_class_name %>Helper
-  
+  #include <%= controller_class_name %>Helper
+
   before(:each) do
     assigns[:<%= nesting_owner %>] = stub_model(<%= nesting_owner_class %>)
     assigns[:<%= file_name %>] = @<%= file_name %> = stub_model(<%= class_name %><%= attributes.empty? ? ')' : ',' %>

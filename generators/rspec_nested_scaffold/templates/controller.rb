@@ -1,23 +1,26 @@
 class <%= controller_class_name %>Controller < ApplicationController
-  
+
   before_filter :load_<%= nesting_owner %>
-  
+
   protected
-  
+
   def load_<%= nesting_owner %>
     @<%=nesting_owner %> = <%= nesting_owner_class %>.find(params[:<%= nesting_owner %>_id])
   end
-  
+
   public
-  
+
   # GET /<%=nesting_owner.pluralize%>/:<%=nesting_owner%>_id/<%= table_name %>
   # GET /<%=nesting_owner.pluralize%>/:<%=nesting_owner%>_id/<%= table_name %>.xml
   def index
-    @<%= table_name %> = @<%= nesting_owner %>.<%= table_name %>
-    
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @<%= table_name %> }
+      format.html do # index.html.erb
+         @<%= table_name %> = @<%= nesting_owner %>.<%= table_name %>.paginate(:page => params[:page], :per_page => 25)
+      end
+      format.xml do
+        @<%= table_name %> = @<%= nesting_owner %>.<%= table_name %>
+        render :xml => @<%= table_name %>
+      end
     end
   end
 
@@ -55,7 +58,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
     respond_to do |format|
       if @<%= file_name %>.save
-        flash[:notice] = '<%= class_name %> was successfully created.'
+        flash[:notice] = '<%= class_name %> wurde erstellt.'
         format.html { redirect_to([@<%= nesting_owner %>, @<%= file_name %>]) }
         format.xml  { render :xml => @<%= file_name %>, :status => :created, :location => <%= nesting_owner %>_<%= file_name %>_path(<%= nesting_owner %>, @<%= file_name %>) }
       else
@@ -72,7 +75,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
     respond_to do |format|
       if @<%= file_name %>.update_attributes(params[:<%= file_name %>])
-        flash[:notice] = '<%= class_name %> was successfully updated.'
+        flash[:notice] = '<%= class_name %> wurde aktualisiert.'
         format.html { redirect_to([@<%= nesting_owner %>, @<%= file_name %>]) }
         format.xml  { head :ok }
       else

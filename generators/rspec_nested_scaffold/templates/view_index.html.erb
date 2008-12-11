@@ -1,4 +1,4 @@
-<h1>Listing <%= plural_name %></h1>
+<h1><%= plural_name %></h1>
 
 <table>
   <tr>
@@ -12,13 +12,15 @@
 <% for attribute in attributes -%>
     <td><%%=h <%= singular_name %>.<%= attribute.name %> %></td>
 <% end -%>
-    <td><%%= link_to 'Show', [@<%= nesting_owner %>, <%= singular_name %>] %></td>
-    <td><%%= link_to 'Edit', edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, <%= singular_name %>) %></td>
-    <td><%%= link_to 'Destroy', [@<%= nesting_owner %>, <%= singular_name %>], :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%%= link_to 'Anzeigen', [@<%= nesting_owner %>, <%= singular_name %>] %></td>
+    <td><%%= link_to 'Bearbeiten', edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, <%= singular_name %>) %></td>
+    <td><%%= link_to 'Löschen', [@<%= nesting_owner %>, <%= singular_name %>], :confirm => 'Möchten Sie den gewählten Datensatz wirklich löschen?', :method => :delete %></td>
   </tr>
 <%% end %>
 </table>
 
 <br />
 
-<%%= link_to 'New <%= singular_name %>', new_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>) %>
+<%%= will_paginate @<%= plural_name %> %>
+
+<%%= link_to '<%= singular_name %> erstellen', new_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>) %>
