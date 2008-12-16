@@ -1,26 +1,30 @@
+<p class="breadcrump">
+  <%%= link_to '<%= nesting_owner_plural_cap %>', <%= nesting_owner_plural %>_path %> &gt;
+  <%%= link_to @<%= nesting_owner %>.display_name, @<%= nesting_owner %> %> &gt;
+  <%= plural_name_cap %>  
+</p>
 <h1><%= plural_name_cap %> für <%= nesting_owner_cap %> &raquo;<%%= @<%= nesting_owner %>.display_name %>&laquo;</h1>
 
+<%% if @<%= plural_name %>.size > 0 %>
 <table>
   <tr><% for attribute in attributes -%><% next if attribute.name == 'permalink' %>
     <th><%= attribute.column.human_name %></th><% end -%>
-
+    <th>&nbsp;</th>
+    <th class="rechts">&nbsp;</th>
   </tr>
 
-<%% for <%= singular_name %> in @<%= plural_name %> %>
-  <tr><% first=true %><% for attribute in attributes -%><% next if attribute.name == 'permalink' %><% if first %>
-    <td><%%= link_to h(<%= singular_name %>.<%= attribute.name %>), [@<%= nesting_owner %>, <%= singular_name %>] %></td><% first=false %><% else %>
-    <td><%%=h <%= singular_name %>.<%= attribute.name %> %></td><% end %><% end -%>
+  <%%= render :partial => 'index_item', :collection => @<%= plural_name %>, :as => :<%= singular_name %> %>
 
-    <td><%%= link_to image_tag('edit.png', :title => 'Bearbeiten',:border=>0), edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, <%= singular_name %>) %></td>
-    <td><%%= link_to image_tag('delete.gif', :title => 'Löschen',:border=>0), [@<%= nesting_owner %>, <%= singular_name %>], :confirm => 'Möchten Sie den gewählten Datensatz wirklich löschen?', :method => :delete %></td>
-  </tr>
-<%% end %>
 </table>
-
+<%% else %>
+<p>
+  <i>Es sind keine <%= plural_name_cap %> im System erfasst.</i>
+</p>
+<%% end %>
 <br />
 
 <%%= will_paginate @<%= plural_name %> %>
 
-<%%= link_to "<%= nesting_owner_cap %> #{@<%= nesting_owner %>.display_name}", @<%= nesting_owner %> %>
+<%%= link_to "<%= singular_name_cap %> erstellen", new_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>) %><br/>
+<%%= link_to "Zurück zu #{@<%= nesting_owner %>.display_name}", @<%= nesting_owner %> %>
 
-<%%= link_to "<%= singular_name_cap %> erstellen für <%= nesting_owner_cap %> #{@<%= nesting_owner %>.display_name}", new_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>) %>

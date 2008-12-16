@@ -1,3 +1,10 @@
+<p class="breadcrump">
+  <%%= link_to '<%= nesting_owner_plural_cap %>', <%= nesting_owner_plural %>_path %> &gt;
+  <%%= link_to @<%= nesting_owner %>.display_name, @<%= nesting_owner %> %> &gt;
+  <%%= link_to '<%= plural_name_cap %>',  <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>  &gt;
+  <%= singular_name_cap %> erstellen
+</p>
+
 <%%= render :partial => 'form', :locals => {:title => "<%= singular_name_cap %> erstellen für <%= nesting_owner_cap %> &raquo;#{@<%= nesting_owner %>.display_name}&laquo;"} %>
 
 <%%= link_to 'Abbrechen', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>

@@ -83,7 +83,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
                    "rspec_nested_scaffold:view_#{action}.#{@default_file_extension}",
                    File.join('app/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}")
                    )
-        unless action == '_form'
+        unless action == '_form' || action == '_index_item'
           m.template "rspec_nested_scaffold:#{action}_erb_spec.rb",
           File.join('spec/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}_spec.rb")
         end
@@ -129,7 +129,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
   end
 
   def scaffold_views
-    %w[ index show new edit _form]
+    %w[ index show new edit _form _index_item]
   end
 
   def model_name
@@ -139,6 +139,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
   def nesting_owner_class
     nesting_owner.classify
   end
+
   def plural_name_cap
     plural_name.capitalize
   end
@@ -150,6 +151,13 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
   def nesting_owner_cap
     nesting_owner.capitalize
   end
+  def nesting_owner_plural
+    nesting_owner.pluralize
+  end
+  def nesting_owner_plural_cap
+    nesting_owner_plural.capitalize
+  end
+
 end
 
 module Rails

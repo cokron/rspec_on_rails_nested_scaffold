@@ -1,11 +1,20 @@
-<% for attribute in attributes -%>
-<% next if attribute.name == 'permalink' %>
+<p class="breadcrump">
+  <%%= link_to '<%= nesting_owner_plural_cap %>', <%= nesting_owner_plural %>_path %> &gt;
+  <%%= link_to @<%= nesting_owner %>.display_name, @<%= nesting_owner %> %> &gt;
+  <%%= link_to '<%= plural_name_cap %>',  <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>  &gt;
+  <%%= @<%= singular_name %>.display_name %>
+</p>
+
+<% for attribute in attributes -%><% next if attribute.name == 'permalink' %>
 <p>
   <b><%= attribute.column.human_name %>:</b>
   <%%=h @<%= singular_name %>.<%= attribute.name %> %>
 </p>
-
 <% end -%>
+
+<div class="clear">
+  Erstellt am <%%= @<%= singular_name %>.created_at %>, bearbeitet am <%%= @<%= singular_name %>.updated_at %>
+</div>
 
 <%%= link_to 'Bearbeiten', edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, @<%= singular_name %>) %> |
 <%%= link_to 'Zur Liste der <%= plural_name_cap %>', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>
