@@ -16,6 +16,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
   alias_method  :controller_table_name, :controller_plural_name
 
   def initialize(runtime_args, runtime_options = {})
+    I18n.locale = "en-US"
     super
     raise "For #{$0} #{File.basename(__FILE__, '.rb')} you must specify the --owner option.  See --help" unless options[:owner]
 
@@ -82,13 +83,14 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
                    "rspec_nested_scaffold:view_#{action}.#{@default_file_extension}",
                    File.join('app/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}")
                    )
-
-        m.template "rspec_nested_scaffold:#{action}_erb_spec.rb",
-        File.join('spec/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}_spec.rb")
+        unless action == '_form'
+          m.template "rspec_nested_scaffold:#{action}_erb_spec.rb",
+          File.join('spec/views', controller_class_path, controller_file_name, "#{action}.#{default_file_extension}_spec.rb")
+        end
       end
 
       # Model class, unit test, and fixtures.
-      m.template 'model:model.rb',      File.join('app/models', class_path, "#{file_name}.rb")
+      m.template 'model.rb',      File.join('app/models', class_path, "#{file_name}.rb")
       m.template 'model:fixtures.yml',  File.join('spec/fixtures', class_path, "#{table_name}.yml")
       m.template 'rspec_model:model_spec.rb',       File.join('spec/models', class_path, "#{file_name}_spec.rb")
 
@@ -136,6 +138,17 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
 
   def nesting_owner_class
     nesting_owner.classify
+  end
+  def plural_name_cap
+    plural_name.capitalize
+  end
+
+  def singular_name_cap
+    singular_name.capitalize
+  end
+
+  def nesting_owner_cap
+    nesting_owner.capitalize
   end
 end
 

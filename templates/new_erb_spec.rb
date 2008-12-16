@@ -17,7 +17,7 @@ describe "/<%= table_name %>/new.<%= default_file_extension %>" do
     render "/<%= table_name %>/new.<%= default_file_extension %>"
 
     response.should have_tag("form[action=?][method=post]", <%= nesting_owner %>_<%= table_name %>_path(@<%= nesting_owner %>)) do
-<% for attribute in attributes -%><% unless attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) -%>
+<% for attribute in attributes -%><% unless attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) -%><% next if attribute.name == 'permalink' %>
       with_tag("<%= attribute.input_type -%>#<%= file_name %>_<%= attribute.name %>[name=?]", "<%= file_name %>[<%= attribute.name %>]")
 <% end -%><% end -%>
     end

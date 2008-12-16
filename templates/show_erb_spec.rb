@@ -16,7 +16,7 @@ describe "/<%= table_name %>/show.<%= default_file_extension %>" do
 
   it "should render attributes in <p>" do
     render "/<%= table_name %>/show.<%= default_file_extension %>"
-<% for attribute in attributes -%><% unless attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) -%>
+<% for attribute in attributes -%><% unless attribute.name =~ /_id/ || [:datetime, :timestamp, :time, :date].index(attribute.type) -%><% next if attribute.name == 'permalink' %>
     response.should have_text(/<%= Regexp.escape(attribute.default_value)[1..-2]%>/)
 <% end -%><% end -%>
   end

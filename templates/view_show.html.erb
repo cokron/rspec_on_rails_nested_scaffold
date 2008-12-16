@@ -1,4 +1,5 @@
 <% for attribute in attributes -%>
+<% next if attribute.name == 'permalink' %>
 <p>
   <b><%= attribute.column.human_name %>:</b>
   <%%=h @<%= singular_name %>.<%= attribute.name %> %>
@@ -7,4 +8,4 @@
 <% end -%>
 
 <%%= link_to 'Bearbeiten', edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, @<%= singular_name %>) %> |
-<%%= link_to 'Zurück', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>
+<%%= link_to 'Zur Liste der <%= plural_name_cap %>', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>

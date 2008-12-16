@@ -1,6 +1,4 @@
-<h1><%= singular_name %> bearbeiten</h1>
-
-<%%= render :partial => 'form' %>
+<%%= render :partial => 'form', :locals => {:title => "<%= singular_name_cap %> bearbeiten – <%= nesting_owner_cap %> &raquo;#{@<%= nesting_owner %>.display_name}&laquo;"} %>
 
 <%%= link_to 'Anzeigen', [@<%= nesting_owner %>, @<%= singular_name %>] %> |
-<%%= link_to 'Zurück', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>
+<%%= link_to "Zurück zu <%= nesting_owner_cap %> #{@<%= nesting_owner %>.display_name}", <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>

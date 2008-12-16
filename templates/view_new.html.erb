@@ -1,5 +1,3 @@
-<h1><%= singular_name %> erstellen</h1>
-
-<%%= render :partial => 'form' %>
+<%%= render :partial => 'form', :locals => {:title => "<%= singular_name_cap %> erstellen für <%= nesting_owner_cap %> &raquo;#{@<%= nesting_owner %>.display_name}&laquo;"} %>
 
 <%%= link_to 'Abbrechen', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>
