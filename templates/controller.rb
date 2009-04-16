@@ -62,7 +62,7 @@ class <%= controller_class_name %>Controller < ApplicationController
       if @<%= file_name %>.save
         flash[:notice] = '<%= class_name %> wurde erstellt.'
         format.html { redirect_to([@<%= nesting_owner %>, @<%= file_name %>]) }
-        format.xml  { render :xml => @<%= file_name %>, :status => :created, :location => <%= nesting_owner %>_<%= file_name %>_path(<%= nesting_owner %>, @<%= file_name %>) }
+        format.xml  { render :xml => @<%= file_name %>, :status => :created, :location => <%= nesting_owner %>_<%= file_name %>_path(@<%= nesting_owner %>, @<%= file_name %>) }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }

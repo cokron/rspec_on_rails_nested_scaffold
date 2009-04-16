@@ -25,6 +25,6 @@
 
 <%%= will_paginate @<%= plural_name %> %>
 
-<%%= link_to "<%= singular_name_cap %> erstellen", new_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>) %><br/>
+<%%= link_to "<%= singular_name_cap %> erstellen", new_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>), :accesskey => 'n', :title => 'Ctrl+n' %><br/>
 <%%= link_to "Zurück zu #{@<%= nesting_owner %>.display_name}", @<%= nesting_owner %> %>
 

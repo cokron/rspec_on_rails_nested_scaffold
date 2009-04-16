@@ -92,7 +92,7 @@ class RspecNestedScaffoldGenerator < Rails::Generator::NamedBase
       # Model class, unit test, and fixtures.
       m.template 'model.rb',      File.join('app/models', class_path, "#{file_name}.rb")
       m.template 'model:fixtures.yml',  File.join('spec/fixtures', class_path, "#{table_name}.yml")
-      m.template 'rspec_model:model_spec.rb',       File.join('spec/models', class_path, "#{file_name}_spec.rb")
+      m.template 'model_spec.rb',       File.join('spec/models', class_path, "#{file_name}_spec.rb")
 
       # View specs
       #      m.template 'rspec_nested_scaffold:view_form.html.erb',      File.join('app/views', controller_class_path, "_form.html.erb")

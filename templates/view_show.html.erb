@@ -16,5 +16,5 @@
   Erstellt am <%%= @<%= singular_name %>.created_at %>, bearbeitet am <%%= @<%= singular_name %>.updated_at %>
 </div>
 
-<%%= link_to 'Bearbeiten', edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, @<%= singular_name %>) %> |
+<%%= link_to 'Bearbeiten', edit_<%= nesting_owner %>_<%= singular_name %>_path(@<%= nesting_owner %>, @<%= singular_name %>, :accesskey => 'b', :title => 'Ctrl+b') %> |
 <%%= link_to 'Zur Liste der <%= plural_name_cap %>', <%= nesting_owner %>_<%= plural_name %>_path(@<%= nesting_owner %>) %>
